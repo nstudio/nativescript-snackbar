@@ -2,7 +2,7 @@
     <h2 align="center">NativeScript-Snackbar 🍭 🍫 🍦</h2>
 </a>
 <h4 align="center">
-NativeScript-Loading-Indicator is a plugin for NativeScript which overlays a loading indicator on the current page. Can be used, for example, to prevent the UI being interacted with while data is being fetched from an API, while informing the user that something is happening.
+NativeScript plugin for Material Design SnackBar component.
 </h4>
 
 <p align="center">
