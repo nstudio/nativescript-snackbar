@@ -1,4 +1,4 @@
-import { SnackBar, SnackBarOptions } from 'nativescript-snackbar';
+import { SnackBar, SnackBarOptions } from '@nstudio/nativescript-snackbar';
 import { Observable } from 'tns-core-modules/data/observable';
 import { confirm } from 'tns-core-modules/ui/dialogs';
 import { Page } from 'tns-core-modules/ui/page';

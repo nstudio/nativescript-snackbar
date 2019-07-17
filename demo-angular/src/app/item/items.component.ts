@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Item } from './item';
 import { ItemService } from './item.service';
-import { SnackBar } from 'nativescript-snackbar';
+import { SnackBar } from '@nstudio/nativescript-snackbar';
 
 @Component({
     selector: 'ns-items',

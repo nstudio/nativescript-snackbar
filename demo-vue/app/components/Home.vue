@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { SnackBar } from 'nativescript-snackbar';
+import { SnackBar } from '@nstudio/nativescript-snackbar';
 
 export default {
   computed: {

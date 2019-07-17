@@ -38,18 +38,12 @@ NativeScript plugin for Material Design SnackBar component.
 
 ![Snackbar](./screens/snackbar.gif)
 
-## Installation
-
-`tns plugin add @nstudio/nativescript-snackbar`
-
-## [Changelog](./CHANGELOG.md)
-
 ## Usage
 
 ### TS
 
 ```typescript
-import { SnackBar, SnackBarOptions } from "nativescript-snackbar";
+import { SnackBar, SnackBarOptions } from "@nstudio/nativescript-snackbar";
 
 // Create an instance of SnackBar
 const snackbar = new SnackBar();
@@ -110,3 +104,21 @@ Manually dismiss an active SnackBar
 - **maxLines: number**
 - **isRTL: boolean**
 - **view: View**
+
+## Run Demo
+
+```bash
+git clone https://github.com/nstudio/nativescript-snackbar.git
+cd nativescript-snackbar/src
+npm run setup
+
+npm run demo.ios
+
+// or...
+
+npm run demo.android
+```
+
+## [Changelog](./CHANGELOG.md)
+
+## [Contributing](./CONTRIBUTING.md)
