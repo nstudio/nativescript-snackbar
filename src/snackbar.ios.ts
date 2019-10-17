@@ -1,77 +1,126 @@
 import { DismissReasons, SnackBarOptions } from './snackbar.common';
 import { Color } from 'tns-core-modules/color/color';
+import { View } from 'tns-core-modules/ui/core/view';
+import { Subject } from 'rxjs';
 export * from './snackbar.common';
 
 declare let TTGSnackbar;
 
 export class SnackBar {
-  public async simple(snackText: string) {
-    const snackbar = new TTGSnackbar({
-      message: snackText,
-      duration: 3
+  private dismiss$: Subject<void> = new Subject();
+  private newSnack$: Subject<void> = new Subject();
+
+  public simple(
+    snackText: string,
+    textColor?: string,
+    backgroundColor?: string,
+    maxLines?: number,
+    isRTL?: boolean,
+    view?: View
+  ) {
+    this.newSnack$.next();
+    return new Promise(resolve => {
+      const duration = 3;
+      let reason: DismissReasons = null;
+      let snackbar = new TTGSnackbar({ message: snackText, duration });
+      snackbar.shouldDismissOnSwipe = true;
+
+      if (textColor && Color.isValid(textColor)) {
+        snackbar.messageTextColor = new Color(textColor).ios;
+      }
+      if (backgroundColor && Color.isValid(backgroundColor)) {
+        snackbar.backgroundColor = new Color(backgroundColor).ios;
+      }
+      if (isRTL) snackbar.messageTextAlign = 2;
+
+      snackbar.show();
+
+      // callbacks
+      snackbar.dismissBlock = args => {
+        resolve({
+          event: args,
+          command: 'Dismiss',
+          reason: reason ? reason : DismissReasons.TIMEOUT
+        });
+      };
+
+      snackbar.onSwipeBlock = () => {
+        reason = DismissReasons.SWIPE;
+        snackbar.dismiss();
+      };
+
+      this.dismiss$.subscribe(() => {
+        reason = DismissReasons.MANUAL;
+        snackbar.dismiss();
+      });
+
+      this.newSnack$.subscribe(() => {
+        reason = DismissReasons.CONSECUTIVE;
+        snackbar.dismiss();
+      });
     });
-    snackbar.show();
-    return;
   }
 
   public async action(options: SnackBarOptions) {
-    return;
-    // try {
-    //   if (!options.hideDelay) options.hideDelay = 3000;
-    //   this._snackbar = SSSnackbar.snackbarWithMessageActionTextDurationActionBlockDismissalBlock(
-    //     options.snackText,
-    //     options.actionText,
-    //     options.hideDelay / 1000,
-    //     args => {
-    //       resolve({
-    //         command: 'Action',
-    //         event: args
-    //       });
-    //     },
-    //     args => {
-    //       const reason = this._isDismissedManual
-    //         ? DismissReasons.MANUAL
-    //         : DismissReasons.TIMEOUT;
-    //       this._isDismissedManual = false; // reset
-    //       resolve({
-    //         command: 'Dismiss',
-    //         reason: reason,
-    //         event: args
-    //       });
-    //     }
-    //   );
-    //   this._snackbar.show();
-    // } catch (ex) {
-    //   reject(ex);
-    // }
+    const {
+      actionText,
+      snackText,
+      actionTextColor,
+      textColor,
+      backgroundColor,
+      isRTL
+    } = options;
+
+    this.newSnack$.next();
+    return new Promise(resolve => {
+      const duration = 3;
+      let reason: DismissReasons = null;
+      let snackbar = new TTGSnackbar({ message: snackText, duration });
+      snackbar.shouldDismissOnSwipe = true;
+
+      if (textColor && Color.isValid(textColor)) {
+        snackbar.messageTextColor = new Color(textColor).ios;
+      }
+      if (backgroundColor && Color.isValid(backgroundColor)) {
+        snackbar.backgroundColor = new Color(backgroundColor).ios;
+      }
+      if (isRTL) snackbar.messageTextAlign = 2;
+
+      snackbar.actionText = actionText;
+      if (actionTextColor && Color.isValid(actionTextColor)) {
+        snackbar.actionTextColor = new Color(actionTextColor).ios;
+      }
+      snackbar.actionBlock = () => (reason = DismissReasons.ACTION);
+
+      snackbar.show();
+
+      //callbacks
+      snackbar.dismissBlock = args => {
+        resolve({
+          event: args,
+          command: 'Dismiss',
+          reason: reason ? reason : DismissReasons.TIMEOUT
+        });
+      };
+
+      snackbar.onSwipeBlock = () => {
+        reason = DismissReasons.SWIPE;
+        snackbar.dismiss();
+      };
+
+      this.dismiss$.subscribe(() => {
+        reason = DismissReasons.MANUAL;
+        snackbar.dismiss();
+      });
+
+      this.newSnack$.subscribe(() => {
+        reason = DismissReasons.CONSECUTIVE;
+        snackbar.dismiss();
+      });
+    });
   }
 
-  dismiss(): Promise<any> {
-    throw new Error('Method not implemented.');
+  async dismiss(): Promise<void> {
+    this.dismiss$.next();
   }
-
-  // public dismiss(options) {
-  //   return new Promise((resolve, reject) => {
-  //     if (this._snackbar !== null && this._snackbar !== 'undefined') {
-  //       try {
-  //         this._isDismissedManual = true;
-  //         this._snackbar.dismiss();
-  //         // Return AFTER the item is dismissed, 200ms delay
-  //         setTimeout(() => {
-  //           resolve({
-  //             action: 'Dismiss',
-  //             reason: DismissReasons.MANUAL
-  //           });
-  //         }, 200);
-  //       } catch (ex) {
-  //         reject(ex);
-  //       }
-  //     } else {
-  //       resolve({
-  //         action: 'None',
-  //         message: 'No actionbar to dismiss'
-  //       });
-  //     }
-  //   });
-  // }
 }
