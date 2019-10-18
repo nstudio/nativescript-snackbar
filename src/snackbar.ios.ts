@@ -7,8 +7,8 @@ export * from './snackbar.common';
 declare let TTGSnackbar;
 
 export class SnackBar {
-  private dismiss$: Subject<void> = new Subject();
-  private newSnack$: Subject<void> = new Subject();
+  private dismissEvent$: Subject<void> = new Subject();
+  private newSnackEvent$: Subject<void> = new Subject();
 
   public simple(
     snackText: string,
@@ -18,7 +18,9 @@ export class SnackBar {
     isRTL?: boolean,
     view?: View
   ) {
-    this.newSnack$.next();
+    // Notify new snackbar creation
+    this.newSnackEvent$.next();
+
     return new Promise(resolve => {
       const duration = 3;
       let reason: DismissReasons = null;
@@ -37,6 +39,10 @@ export class SnackBar {
 
       // callbacks
       snackbar.dismissBlock = args => {
+        // avoid memory leaks
+        dismissSubscription.unsubscribe();
+        newSnackSubscription.unsubscribe();
+
         resolve({
           event: args,
           command: 'Dismiss',
@@ -49,12 +55,13 @@ export class SnackBar {
         snackbar.dismiss();
       };
 
-      this.dismiss$.subscribe(() => {
+      // subscriptions
+      const dismissSubscription = this.dismissEvent$.subscribe(() => {
         reason = DismissReasons.MANUAL;
         snackbar.dismiss();
       });
 
-      this.newSnack$.subscribe(() => {
+      const newSnackSubscription = this.newSnackEvent$.subscribe(() => {
         reason = DismissReasons.CONSECUTIVE;
         snackbar.dismiss();
       });
@@ -71,7 +78,7 @@ export class SnackBar {
       isRTL
     } = options;
 
-    this.newSnack$.next();
+    this.newSnackEvent$.next();
     return new Promise(resolve => {
       const duration = 3;
       let reason: DismissReasons = null;
@@ -96,6 +103,10 @@ export class SnackBar {
 
       //callbacks
       snackbar.dismissBlock = args => {
+        // avoid memory leaks
+        dismissSubscription.unsubscribe();
+        newSnackSubscription.unsubscribe();
+
         resolve({
           event: args,
           command: 'Dismiss',
@@ -108,12 +119,13 @@ export class SnackBar {
         snackbar.dismiss();
       };
 
-      this.dismiss$.subscribe(() => {
+      //subscriptions
+      const dismissSubscription = this.dismissEvent$.subscribe(() => {
         reason = DismissReasons.MANUAL;
         snackbar.dismiss();
       });
 
-      this.newSnack$.subscribe(() => {
+      const newSnackSubscription = this.newSnackEvent$.subscribe(() => {
         reason = DismissReasons.CONSECUTIVE;
         snackbar.dismiss();
       });
@@ -121,6 +133,6 @@ export class SnackBar {
   }
 
   async dismiss(): Promise<void> {
-    this.dismiss$.next();
+    this.dismissEvent$.next();
   }
 }
