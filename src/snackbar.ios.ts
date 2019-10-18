@@ -1,10 +1,8 @@
-import { DismissReasons, SnackBarOptions } from './snackbar.common';
+import { Subject } from 'rxjs';
 import { Color } from 'tns-core-modules/color/color';
 import { View } from 'tns-core-modules/ui/core/view';
-import { Subject } from 'rxjs';
+import { DismissReasons, SnackBarOptions } from './snackbar.common';
 export * from './snackbar.common';
-
-declare let TTGSnackbar;
 
 export class SnackBar {
   private dismissEvent$: Subject<void> = new Subject();
