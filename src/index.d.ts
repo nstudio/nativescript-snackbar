@@ -6,10 +6,10 @@ export declare class SnackBar {
   /**
    * Shows a simple SnackBar.
    * @param {string} - The SnackBar text.
-   * @param {string} - The color of the snackbar text.backgroundColor * Android Only *
-   * @param {string} - The background color of the snackbar. * Android Only *
+   * @param {string} - The color of the snackbar text.backgroundColor.
+   * @param {string} - The background color of the snackbar.
    * @param {number} - The max lines for the text of the snackbar. * Android Only *
-   * @param {boolean} - Set RTL for the textview of the snackbar. * Android Only *
+   * @param {boolean} - Set RTL for the textview of the snackbar.
    * @param {View} - The View to which the snackbar will be attached. Default to topmost().currentPage. * Android Only *
    */
   simple(
@@ -69,7 +69,6 @@ export interface SnackBarOptions {
   maxLines?: number;
 
   /**
-   * *Android Only*
    * Use RTL for textview of snackbar.
    */
   isRTL?: boolean;

@@ -59,13 +59,13 @@ public showSimple() {
 public showAction() {
   const options: SnackBarOptions = {
     actionText: this.get('actionText'),
-    actionTextColor: '#ff4081', // Optional, Android only
+    actionTextColor: '#ff4081',
     snackText: this.get('snackText'),
-    textColor: '#346db2', // Optional, Android only
+    textColor: '#346db2',
     hideDelay: 3500,
-    backgroundColor: '#eaeaea', // Optional, Android only
+    backgroundColor: '#eaeaea',
     maxLines: 3, // Optional, Android Only
-    isRTL: false, // Optional, Android Only
+    isRTL: false,
     view: <View>someView // Optional, Android Only, default to topmost().currentPage
   };
 

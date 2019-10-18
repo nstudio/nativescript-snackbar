@@ -37,7 +37,6 @@ export interface SnackBarOptions {
   maxLines?: number;
 
   /**
-   * *Android Only*
    * Use RTL for textview of snackbar.
    */
   isRTL?: boolean;
