@@ -1,6 +1,6 @@
 {
   "name": "@nstudio/nativescript-snackbar",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A NativeScript plugin for the Material Design SnackBar.",
   "main": "snackbar",
   "typings": "index.d.ts",
@@ -45,47 +45,12 @@
     "snackbar",
     "android",
     "ios",
-    "material design",
-    "bradmartin",
-    "sitefintysteve",
-    "NathanaelA",
-    "MarcBuils"
+    "material design"
   ],
   "author": {
     "name": "Brad Martin",
-    "email": "bmartin@nstudio.io",
     "url": "https://github.com/bradmartin"
   },
-  "contributors": [
-    {
-      "name": "Steve McNiven-Scott",
-      "email": "steve@sitefinitysteve.com",
-      "url": "https://github.com/sitefinitysteve"
-    },
-    {
-      "name": "Nathanael Anderson",
-      "url": "https://github.com/NathanaelA"
-    },
-    {
-      "name": "Marc Buils",
-      "email": "marc.buils@marcbuils.fr",
-      "url": "http://www.marcbuils.fr/"
-    },
-    {
-      "name": "Rob Laverty",
-      "email": "roblav96@gmail.com",
-      "url": "https://github.com/roblav96"
-    },
-    {
-      "name": "Davor Peic",
-      "url": "http://www.davorpeic.com"
-    },
-    {
-      "name": "Eddy Verbruggen",
-      "email": "eddyverbruggen@gmail.com",
-      "url": "https://github.com/eddyverbruggen"
-    }
-  ],
   "license": "Apache-2.0",
   "bugs": "https://github.com/nstudio/nativescript-snackbar/issues",
   "homepage": "https://github.com/nstudio/nativescript-snackbar",
@@ -98,6 +63,7 @@
     "typescript": "~3.4.5",
     "prompt": "^1.0.0",
     "rimraf": "^2.5.0",
+    "rxjs": "6.5.3",
     "tslint": "^5.18.0",
     "semver": "^6.2.0"
   }
