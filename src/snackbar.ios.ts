@@ -73,13 +73,15 @@ export class SnackBar {
       actionTextColor,
       textColor,
       backgroundColor,
-      isRTL
+      isRTL,
+      hideDelay
     } = options;
 
     this.newSnackEvent$.next();
     return new Promise(resolve => {
-      const duration = 3;
       let reason: DismissReasons = null;
+      const duration = hideDelay ? hideDelay / 1000 : 3;
+
       let snackbar = new TTGSnackbar({ message: snackText, duration });
       snackbar.shouldDismissOnSwipe = true;
 
