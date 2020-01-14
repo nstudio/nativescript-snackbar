@@ -22,7 +22,7 @@ jobs:
       - name: Lint
         run: |
           cd src && npm run tslint
-          cd demo && npm run ci.tslint
+          cd ../demo && npm run ci.tslint
 
       - name: Setup JDK 1.8
         uses: actions/setup-java@v1
