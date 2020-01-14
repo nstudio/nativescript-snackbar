@@ -1,0 +1,78 @@
+name: Build CI
+
+# Trigger the workflow on push or pull request
+on: [push]
+
+jobs:
+  build:
+    name: Build
+
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "10.x"
+
+      - name: Build Plugin Source
+        run: cd src && npm i && npm i -g typescript && tsc
+
+      - name: Lint
+        run: |
+          cd src && npm run tslint
+          cd demo && npm run ci.tslint
+
+      - name: Setup JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Install PIP
+        run: |
+          sudo pip install --upgrade pip
+          sudo pip install six
+
+      - name: Setup NativeScript CLI
+        run: |
+          echo no | npm i -g nativescript
+          tns usage-reporting disable
+          tns error-reporting disable
+
+      - name: Build Vanilla Android Demo App
+        run: |
+          cd demo && tns build android --env.uglify
+
+      - name: Build Vanilla iOS Demo App
+        run: |
+          cd demo && tns build ios --env.uglify
+
+      - name: Build Angular Android
+        run: |
+          cd demo-angular && tns build android --env.uglify --env.aot
+
+      - name: Build Angular iOS
+        run: |
+          cd demo-angular && tns build ios --env.uglify --env.aot
+
+      - name: Build Vue Android
+        run: |
+          cd demo-vue && tns build android --env.uglify
+
+      - name: Build Vue iOS
+        run: |
+          cd demo-vue && tns build ios --env.uglify
+
+      - name: Android Test
+        run: |
+          echo no | android create avd --force -n test -t android-21 -b armeabi-v7a
+          emulator -avd test -no-audio -no-window &
+          android-wait-for-emulator
+          cd src && npm i && npm run tsc && npm run tslint && cd ../demo && tns build android
+          tns test android --justlaunch
+
+      - name: iOS Test
+        run: |
+          cd src && npm i && npm run tsc && npm run tslint && cd ../demo && tns build ios
+          tns test ios --justlaunch
