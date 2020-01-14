@@ -18,7 +18,7 @@
     "tsc": "tsc -skipLibCheck",
     "build": "npm i && tsc",
     "build.native": "node scripts/build-native.js",
-    "tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json --exclude \"**/node_modules/**\" --exclude \"*demo*/platforms/**\"",
+    "tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json --exclude \"**/node_modules/**\" --exclude \"*demo*/platforms/**\" --exclude \"**/typings/**\"",
     "setup": "npm i && tsc",
     "demo.ios": "npm i && npm run tsc && cd ../demo && tns run ios",
     "demo.android": "npm i && npm run tsc && cd ../demo && tns run android",

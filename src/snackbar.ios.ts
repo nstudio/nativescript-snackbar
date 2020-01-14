@@ -22,7 +22,7 @@ export class SnackBar {
     return new Promise(resolve => {
       const duration = 3;
       let reason: DismissReasons = null;
-      let snackbar = new TTGSnackbar({ message: snackText, duration });
+      const snackbar = new TTGSnackbar({ message: snackText, duration });
       snackbar.shouldDismissOnSwipe = true;
 
       if (textColor && Color.isValid(textColor)) {
@@ -82,7 +82,7 @@ export class SnackBar {
       let reason: DismissReasons = null;
       const duration = hideDelay ? hideDelay / 1000 : 3;
 
-      let snackbar = new TTGSnackbar({ message: snackText, duration });
+      const snackbar = new TTGSnackbar({ message: snackText, duration });
       snackbar.shouldDismissOnSwipe = true;
 
       if (textColor && Color.isValid(textColor)) {
@@ -101,7 +101,7 @@ export class SnackBar {
 
       snackbar.show();
 
-      //callbacks
+      // callbacks
       snackbar.dismissBlock = args => {
         // avoid memory leaks
         dismissSubscription.unsubscribe();
@@ -119,7 +119,7 @@ export class SnackBar {
         snackbar.dismiss();
       };
 
-      //subscriptions
+      // subscriptions
       const dismissSubscription = this.dismissEvent$.subscribe(() => {
         reason = DismissReasons.MANUAL;
         snackbar.dismiss();

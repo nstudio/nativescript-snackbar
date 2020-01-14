@@ -1,133 +1,142 @@
-
 declare class TTGSnackbar extends UIView {
+  static alloc(): TTGSnackbar; // inherited from NSObject
 
-	static alloc(): TTGSnackbar; // inherited from NSObject
+  static appearance(): TTGSnackbar; // inherited from UIAppearance
 
-	static appearance(): TTGSnackbar; // inherited from UIAppearance
+  static appearanceForTraitCollection(trait: UITraitCollection): TTGSnackbar; // inherited from UIAppearance
 
-	static appearanceForTraitCollection(trait: UITraitCollection): TTGSnackbar; // inherited from UIAppearance
+  static appearanceForTraitCollectionWhenContainedIn(
+    trait: UITraitCollection,
+    ContainerClass: typeof NSObject
+  ): TTGSnackbar; // inherited from UIAppearance
 
-	static appearanceForTraitCollectionWhenContainedIn(trait: UITraitCollection, ContainerClass: typeof NSObject): TTGSnackbar; // inherited from UIAppearance
+  static appearanceForTraitCollectionWhenContainedInInstancesOfClasses(
+    trait: UITraitCollection,
+    containerTypes: NSArray<typeof NSObject> | typeof NSObject[]
+  ): TTGSnackbar; // inherited from UIAppearance
 
-	static appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait: UITraitCollection, containerTypes: NSArray<typeof NSObject> | typeof NSObject[]): TTGSnackbar; // inherited from UIAppearance
+  static appearanceWhenContainedIn(
+    ContainerClass: typeof NSObject
+  ): TTGSnackbar; // inherited from UIAppearance
 
-	static appearanceWhenContainedIn(ContainerClass: typeof NSObject): TTGSnackbar; // inherited from UIAppearance
+  static appearanceWhenContainedInInstancesOfClasses(
+    containerTypes: NSArray<typeof NSObject> | typeof NSObject[]
+  ): TTGSnackbar; // inherited from UIAppearance
 
-	static appearanceWhenContainedInInstancesOfClasses(containerTypes: NSArray<typeof NSObject> | typeof NSObject[]): TTGSnackbar; // inherited from UIAppearance
+  static new(): TTGSnackbar; // inherited from NSObject
 
-	static new(): TTGSnackbar; // inherited from NSObject
+  actionBlock: (p1: TTGSnackbar) => void;
 
-	actionBlock: (p1: TTGSnackbar) => void;
+  actionIcon: UIImage;
 
-	actionIcon: UIImage;
+  actionMaxWidth: number;
 
-	actionMaxWidth: number;
+  actionText: string;
 
-	actionText: string;
+  actionTextColor: UIColor;
 
-	actionTextColor: UIColor;
+  actionTextFont: UIFont;
 
-	actionTextFont: UIFont;
+  actionTextNumberOfLines: number;
 
-	actionTextNumberOfLines: number;
+  activityIndicatorViewColor: UIColor;
 
-	activityIndicatorViewColor: UIColor;
+  activityIndicatorViewStyle: UIActivityIndicatorViewStyle;
 
-	activityIndicatorViewStyle: UIActivityIndicatorViewStyle;
+  animationDuration: number;
 
-	animationDuration: number;
+  animationInitialSpringVelocity: number;
 
-	animationInitialSpringVelocity: number;
+  animationSpringWithDamping: number;
 
-	animationSpringWithDamping: number;
+  animationType: TTGSnackbarAnimationType;
 
-	animationType: TTGSnackbarAnimationType;
+  bottomMargin: number;
 
-	bottomMargin: number;
+  containerView: UIView;
 
-	containerView: UIView;
+  contentInset: UIEdgeInsets;
 
-	contentInset: UIEdgeInsets;
+  cornerRadius: number;
 
-	cornerRadius: number;
+  customContentView: UIView;
 
-	customContentView: UIView;
+  dismissBlock: (p1: TTGSnackbar) => void;
 
-	dismissBlock: (p1: TTGSnackbar) => void;
+  duration: TTGSnackbarDuration;
 
-	duration: TTGSnackbarDuration;
+  icon: UIImage;
 
-	icon: UIImage;
+  iconContentMode: UIViewContentMode;
 
-	iconContentMode: UIViewContentMode;
+  leftMargin: number;
 
-	leftMargin: number;
+  message: string;
 
-	message: string;
+  messageTextAlign: NSTextAlignment;
 
-	messageTextAlign: NSTextAlignment;
+  messageTextColor: UIColor;
 
-	messageTextColor: UIColor;
+  messageTextFont: UIFont;
 
-	messageTextFont: UIFont;
+  onSwipeBlock: (
+    p1: TTGSnackbar,
+    p2: UISwipeGestureRecognizerDirection
+  ) => void;
 
-	onSwipeBlock: (p1: TTGSnackbar, p2: UISwipeGestureRecognizerDirection) => void;
+  onTapBlock: (p1: TTGSnackbar) => void;
 
-	onTapBlock: (p1: TTGSnackbar) => void;
+  rightMargin: number;
 
-	rightMargin: number;
+  secondActionBlock: (p1: TTGSnackbar) => void;
 
-	secondActionBlock: (p1: TTGSnackbar) => void;
+  secondActionText: string;
 
-	secondActionText: string;
+  secondActionTextColor: UIColor;
 
-	secondActionTextColor: UIColor;
+  secondActionTextFont: UIFont;
 
-	secondActionTextFont: UIFont;
+  separateViewBackgroundColor: UIColor;
 
-	separateViewBackgroundColor: UIColor;
+  shouldActivateLeftAndRightMarginOnCustomContentView: boolean;
 
-	shouldActivateLeftAndRightMarginOnCustomContentView: boolean;
+  shouldDismissOnSwipe: boolean;
 
-	shouldDismissOnSwipe: boolean;
+  topMargin: number;
 
-	topMargin: number;
+  constructor(o: { message: string; duration: TTGSnackbarDuration });
 
-	constructor(o: { message: string; duration: TTGSnackbarDuration; });
+  dismiss(): void;
 
-	dismiss(): void;
+  initWithMessageDuration(message: string, duration: TTGSnackbarDuration): this;
 
-	initWithMessageDuration(message: string, duration: TTGSnackbarDuration): this;
-
-	show(): void;
+  show(): void;
 }
 
 declare const enum TTGSnackbarAnimationType {
+  FadeInFadeOut = 0,
 
-	FadeInFadeOut = 0,
+  SlideFromBottomToTop = 1,
 
-	SlideFromBottomToTop = 1,
+  SlideFromBottomBackToBottom = 2,
 
-	SlideFromBottomBackToBottom = 2,
+  SlideFromLeftToRight = 3,
 
-	SlideFromLeftToRight = 3,
+  SlideFromRightToLeft = 4,
 
-	SlideFromRightToLeft = 4,
+  SlideFromTopToBottom = 5,
 
-	SlideFromTopToBottom = 5,
-
-	SlideFromTopBackToTop = 6
+  SlideFromTopBackToTop = 6
 }
 
 declare const enum TTGSnackbarDuration {
+  Short = 1,
 
-	Short = 1,
+  Middle = 3,
 
-	Middle = 3,
+  Long = 5,
 
-	Long = 5,
-
-	Forever = 2147483647
+  Forever = 2147483647
 }
 
 declare var TTGSnackbarVersionNumber: number;
