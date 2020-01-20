@@ -7,6 +7,7 @@
     "declaration": false,
     "experimentalDecorators": true,
     "sourceMap": true,
+    "diagnostics": true,
     "skipLibCheck": true,
     "noLib": false,
     "noEmitHelpers": true,
@@ -23,6 +24,12 @@
       "*": ["./node_modules/tns-core-modules/*", "./node_modules/*"]
     }
   },
+  "include": [
+    "snackbar.android.ts",
+    "snackbar.ios.ts",
+    "snackbar.common.ts",
+    "references.d.ts"
+  ],
   "exclude": ["node_modules", "platforms"],
   "compileOnSave": false
 }
