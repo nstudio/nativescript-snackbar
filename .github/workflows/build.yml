@@ -13,27 +13,20 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Build Plugin Source
-        run: cd src && npm i && npm i -g typescript && tsc
+      - name: Base Setup
+        run: npm run ci.base.setup
 
       - name: Lint
-        run: |
-          cd src && npm run tslint
-          cd ../demo && npm run ci.tslint
-
-      - name: Setup NativeScript CLI
-        run: cd src && npm run ci.android.setup
+        run: npm run ci.tslint
 
       - name: Build Vanilla Android Demo App
-        run: |
-          cd demo && tns build android --env.uglify
+        run: npm run ci.vanilla.android.build
 
       - name: Build Angular Android
-        run: cd src && npm run ci.ng.android.build
+        run: npm run ci.ng.android.build
 
       - name: Build Vue Android
-        run: |
-          cd demo-vue && tns build android --env.uglify
+        run: npm run ci.vue.android.build
 
       - name: Android Test
         run: |
@@ -49,22 +42,17 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Build Plugin Source
-        run: cd src && npm i && npm i -g typescript && tsc
-
-      - name: Setup NativeScript CLI && PIP
-        run: cd src && npm run ci.ios.setup
+      - name: Base Setup
+        run: npm run ci.base.setup && npm run ci.pip.install
 
       - name: Build Vanilla iOS Demo App
-        run: |
-          cd demo && tns build ios --env.uglify
+        run: cd src && npm run ci.vanilla.ios.build
 
       - name: Build Angular iOS
         run: cd src && npm run ci.ng.ios.build
 
       - name: Build Vue iOS
-        run: |
-          cd demo-vue && tns build ios --env.uglify
+        run: cd src && npm run ci.vue.ios.build
 
       - name: iOS Test
         run: |
