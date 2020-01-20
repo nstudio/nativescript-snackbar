@@ -1,12 +1,11 @@
 name: Build CI
 
-# Trigger the workflow on push or pull request
+# Trigger the workflow on push
 on: [push]
 
 jobs:
   job1:
     name: Android Builds & Test
-
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v1
