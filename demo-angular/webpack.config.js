@@ -7,6 +7,7 @@ const { nsReplaceBootstrap } = require("nativescript-dev-webpack/transformers/ns
 const { nsReplaceLazyLoader } = require("nativescript-dev-webpack/transformers/ns-replace-lazy-loader");
 const { nsSupportHmrNg } = require("nativescript-dev-webpack/transformers/ns-support-hmr-ng");
 const { getMainModulePath } = require("nativescript-dev-webpack/utils/ast-utils");
+const { getNoEmitOnErrorFromTSConfig, getCompilerOptionsFromTSConfig } = require("nativescript-dev-webpack/utils/tsconfig-utils");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
@@ -35,8 +36,7 @@ module.exports = env => {
 
     const {
         // The 'appPath' and 'appResourcesPath' values are fetched from
-        // the nsconfig.json configuration file
-        // when bundling with `tns run android|ios --bundle`.
+        // the nsconfig.json configuration file.
         appPath = "src",
         appResourcesPath = "App_Resources",
 
@@ -51,13 +51,37 @@ module.exports = env => {
         hmr, // --env.hmr,
         unitTesting, // --env.unitTesting
         verbose, // --env.verbose
+        snapshotInDocker, // --env.snapshotInDocker
+        skipSnapshotTools, // --env.skipSnapshotTools
+        compileSnapshot // --env.compileSnapshot
     } = env;
 
+    const useLibs = compileSnapshot;
     const isAnySourceMapEnabled = !!sourceMap || !!hiddenSourceMap;
     const externals = nsWebpack.getConvertedExternals(env.externals);
     const appFullPath = resolve(projectRoot, appPath);
-    const appResourcesFullPath = resolve(projectRoot, appResourcesPath);
     const tsConfigName = "tsconfig.tns.json";
+    const tsConfigPath = join(__dirname, tsConfigName);
+    const hasRootLevelScopedModules = nsWebpack.hasRootLevelScopedModules({ projectDir: projectRoot });
+    const hasRootLevelScopedAngular = nsWebpack.hasRootLevelScopedAngular({ projectDir: projectRoot });
+    let coreModulesPackageName = "tns-core-modules";
+    const alias = {
+        '~': appFullPath
+    };
+
+    const compilerOptions = getCompilerOptionsFromTSConfig(tsConfigPath);
+    if (hasRootLevelScopedModules) {
+        coreModulesPackageName = "@nativescript/core";
+        alias["tns-core-modules"] = coreModulesPackageName;
+        nsWebpack.processTsPathsForScopedModules({ compilerOptions });
+    }
+
+    if (hasRootLevelScopedAngular) {
+        alias["nativescript-angular"] = "@nativescript/angular";
+        nsWebpack.processTsPathsForScopedAngular({ compilerOptions });
+    }
+
+    const appResourcesFullPath = resolve(projectRoot, appResourcesPath);
     const entryModule = `${nsWebpack.getEntryModule(appFullPath, platform)}.ts`;
     const entryPath = `.${sep}${entryModule}`;
     const entries = { bundle: entryPath };
@@ -94,10 +118,11 @@ module.exports = env => {
         hostReplacementPaths: nsWebpack.getResolver([platform, "tns"]),
         platformTransformers: ngCompilerTransformers.map(t => t(() => ngCompilerPlugin, resolve(appFullPath, entryModule), projectRoot)),
         mainPath: join(appFullPath, entryModule),
-        tsConfigPath: join(__dirname, tsConfigName),
+        tsConfigPath,
         skipCodeGeneration: !aot,
         sourceMap: !!isAnySourceMapEnabled,
-        additionalLazyModuleResources: additionalLazyModuleResources
+        additionalLazyModuleResources: additionalLazyModuleResources,
+        compilerOptions: { paths: compilerOptions.paths }
     });
 
     let sourceMapFilename = nsWebpack.getSourceMapFilename(hiddenSourceMap, __dirname, dist);
@@ -107,6 +132,8 @@ module.exports = env => {
         itemsToClean.push(`${join(projectRoot, "platforms", "android", "app", "src", "main", "assets", "snapshots")}`);
         itemsToClean.push(`${join(projectRoot, "platforms", "android", "app", "build", "configurations", "nativescript-android-snapshot")}`);
     }
+
+    const noEmitOnErrorFromTSConfig = getNoEmitOnErrorFromTSConfig(join(projectRoot, tsConfigName));
 
     nsWebpack.processAppComponents(appComponents, platform);
     const config = {
@@ -135,14 +162,12 @@ module.exports = env => {
             extensions: [".ts", ".js", ".scss", ".css"],
             // Resolve {N} system modules from tns-core-modules
             modules: [
-                resolve(__dirname, "node_modules/tns-core-modules"),
+                resolve(__dirname, `node_modules/${coreModulesPackageName}`),
                 resolve(__dirname, "node_modules"),
-                "node_modules/tns-core-modules",
+                `node_modules/${coreModulesPackageName}`,
                 "node_modules",
             ],
-            alias: {
-                '~': appFullPath
-            },
+            alias,
             symlinks: true
         },
         resolveLoader: {
@@ -159,6 +184,7 @@ module.exports = env => {
         devtool: hiddenSourceMap ? "hidden-source-map" : (sourceMap ? "inline-source-map" : "none"),
         optimization: {
             runtimeChunk: "single",
+            noEmitOnErrors: noEmitOnErrorFromTSConfig,
             splitChunks: {
                 cacheGroups: {
                     vendor: {
@@ -197,7 +223,7 @@ module.exports = env => {
         module: {
             rules: [
                 {
-                    test: nsWebpack.getEntryPathRegExp(appFullPath, entryPath),
+                    include: join(appFullPath, entryPath),
                     use: [
                         // Require all Android app components
                         platform === "android" && {
@@ -221,19 +247,24 @@ module.exports = env => {
 
                 { test: /\.html$|\.xml$/, use: "raw-loader" },
 
-                // tns-core-modules reads the app.css and its imports using css-loader
                 {
                     test: /[\/|\\]app\.css$/,
                     use: [
                         "nativescript-dev-webpack/style-hot-loader",
-                        { loader: "css-loader", options: { url: false } }
+                        {
+                            loader: "nativescript-dev-webpack/css2json-loader",
+                            options: { useForImports: true }
+                        }
                     ]
                 },
                 {
                     test: /[\/|\\]app\.scss$/,
                     use: [
                         "nativescript-dev-webpack/style-hot-loader",
-                        { loader: "css-loader", options: { url: false } },
+                        {
+                            loader: "nativescript-dev-webpack/css2json-loader",
+                            options: { useForImports: true }
+                        },
                         "sass-loader"
                     ]
                 },
@@ -309,6 +340,9 @@ module.exports = env => {
             ],
             projectRoot,
             webpackConfig: config,
+            snapshotInDocker,
+            skipSnapshotTools,
+            useLibs
         }));
     }
 

@@ -1,8 +1,7 @@
+import { Observable, Page } from '@nativescript/core';
+import { confirm } from '@nativescript/core/ui/dialogs';
+import { openUrl } from '@nativescript/core/utils/utils';
 import { SnackBar, SnackBarOptions } from '@nstudio/nativescript-snackbar';
-import { Observable } from 'tns-core-modules/data/observable';
-import { confirm } from 'tns-core-modules/ui/dialogs';
-import { Page } from 'tns-core-modules/ui/page';
-import { openUrl } from 'tns-core-modules/utils/utils';
 
 export class HelloWorldModel extends Observable {
   private _SnackBar: SnackBar;
