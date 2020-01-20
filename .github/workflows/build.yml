@@ -23,18 +23,14 @@ jobs:
           cd ../demo && npm run ci.tslint
 
       - name: Setup NativeScript CLI
-        run: |
-          echo no | npm i -g nativescript
-          tns usage-reporting disable
-          tns error-reporting disable
+        run: cd src && npm run ci.android.setup
 
       - name: Build Vanilla Android Demo App
         run: |
           cd demo && tns build android --env.uglify
 
       - name: Build Angular Android
-        run: |
-          cd demo-angular && tns build android --env.uglify --env.aot
+        run: cd src && npm run ci.ng.android.build
 
       - name: Build Vue Android
         run: |
@@ -58,20 +54,14 @@ jobs:
         run: cd src && npm i && npm i -g typescript && tsc
 
       - name: Setup NativeScript CLI && PIP
-        run: |
-          sudo pip install --upgrade pip
-          sudo pip install six
-          echo no | npm i -g nativescript
-          tns usage-reporting disable
-          tns error-reporting disable
+        run: cd src && npm run ci.ios.setup
 
       - name: Build Vanilla iOS Demo App
         run: |
           cd demo && tns build ios --env.uglify
 
       - name: Build Angular iOS
-        run: |
-          cd demo-angular && tns build ios --env.uglify --env.aot
+        run: cd src && npm run ci.ng.ios.build
 
       - name: Build Vue iOS
         run: |

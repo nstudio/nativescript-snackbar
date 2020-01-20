@@ -6,7 +6,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noEmitHelpers": true,
-    "noEmitOnError": true,
+    "noEmitOnError": false,
     "lib": ["es6", "dom", "es2015.iterable"],
     "baseUrl": ".",
     "paths": {
