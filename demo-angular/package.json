@@ -7,6 +7,7 @@
   "repository": "<fill-your-repository-here>",
   "dependencies": {
     "@nativescript/core": "^6.3.2",
+    "@nativescript/angular": "~8.20.4",
     "@angular/animations": "~7.2.0",
     "@angular/common": "8.0.0",
     "@angular/compiler": "8.0.0",
@@ -16,7 +17,6 @@
     "@angular/platform-browser": "8.0.0",
     "@angular/platform-browser-dynamic": "8.0.0",
     "@angular/router": "8.0.0",
-    "nativescript-angular": "8.0.2",
     "@nstudio/nativescript-snackbar": "file:../src",
     "nativescript-theme-core": "~1.0.4",
     "reflect-metadata": "~0.1.12",
