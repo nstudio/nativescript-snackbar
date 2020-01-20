@@ -33,7 +33,7 @@ jobs:
 
       - name: Install Android sdkmanager
         run: |
-          wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-darwin-${ANDROID_SDK_TOOLS}.zip
+          wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-darwin-4333796.zip
           sudo unzip -d $ANDROID_HOME android-sdk.zip > /dev/null
 
       - name: Install required Android tools
