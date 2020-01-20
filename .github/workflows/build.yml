@@ -22,14 +22,14 @@ jobs:
       - name: Lint
         run: npm run ci.tslint
 
-      - name: Build Vanilla Android Demo App
-        run: npm run ci.vanilla.android.build
+      # - name: Build Vanilla Android Demo App
+      #   run: npm run ci.vanilla.android.build
 
-      - name: Build Angular Android
-        run: npm run ci.ng.android.build
+      # - name: Build Angular Android
+      #   run: npm run ci.ng.android.build
 
-      - name: Build Vue Android
-        run: npm run ci.vue.android.build
+      # - name: Build Vue Android
+      #   run: npm run ci.vue.android.build
 
       - name: Install Android sdkmanager
         run: |
