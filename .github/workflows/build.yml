@@ -30,10 +30,10 @@ jobs:
 
       - name: Android Test
         run: |
-          echo no | android create avd --force -n test -t android-21 -b armeabi-v7a
+          echo no | android create avd --force -n test -b armeabi-v7a
           emulator -avd test -no-audio -no-window &
           android-wait-for-emulator
-          cd src && npm i && npm run tsc && npm run tslint && cd ../demo && tns build android
+          cd src && npm i && npm run tsc && cd ../demo && tns build android
           tns test android --justlaunch
 
   job2:
@@ -56,5 +56,5 @@ jobs:
 
       - name: iOS Test
         run: |
-          cd src && npm i && npm run tsc && npm run tslint && cd ../demo && tns build ios
+          cd src && npm i && npm run tsc && cd ../demo && tns build ios
           tns test ios --justlaunch
