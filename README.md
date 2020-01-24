@@ -7,6 +7,9 @@ NativeScript plugin for Material Design SnackBar component.
 
 <p align="center">
     <a href="https://www.npmjs.com/package/@nstudio/nativescript-snackbar">
+        <img src="https://github.com/nstudio/nativescript-snackbar/workflows/Build%20CI/badge.svg" alt="Action Build">
+    </a>
+    <a href="https://www.npmjs.com/package/@nstudio/nativescript-snackbar">
         <img src="https://img.shields.io/npm/v/@nstudio/nativescript-snackbar.svg" alt="npm">
     </a>
     <a href="https://www.npmjs.com/package/@nstudio/nativescript-snackbar">
