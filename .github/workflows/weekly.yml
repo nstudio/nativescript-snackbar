@@ -1,7 +1,10 @@
-name: Build CI
+name: Weekly Builds CI
 
-# Trigger the workflow on push
-on: [push]
+# Trigger the workflow
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron: "01 * * * 1"
 
 jobs:
   job1:
@@ -53,13 +56,13 @@ jobs:
         run: npm run ci.base.setup && npm run ci.pip.install
 
       - name: Build Vanilla iOS Demo App
-        run: npm run ci.vanilla.ios.build
+        run: cd src && npm run ci.vanilla.ios.build
 
       - name: Build Angular iOS
-        run: npm run ci.ng.ios.build
+        run: cd src && npm run ci.ng.ios.build
 
       - name: Build Vue iOS
-        run: npm run ci.vue.ios.build
+        run: cd src && npm run ci.vue.ios.build
 
       - name: iOS Test
         run: |
