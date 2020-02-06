@@ -1,6 +1,6 @@
+import * as app from 'tns-core-modules/application';
 import { Color } from 'tns-core-modules/color';
 import { View } from 'tns-core-modules/ui/core/view';
-import { topmost } from 'tns-core-modules/ui/frame';
 import { DismissReasons, SnackBarOptions } from './snackbar.common';
 export * from './snackbar.common';
 
@@ -43,8 +43,14 @@ export class SnackBar {
           return;
         }
 
-        const attachToView =
-          (view && view.android) || topmost().currentPage.android;
+        const activity: android.app.Activity =
+          app.android.foregroundActivity || app.android.startActivity;
+        const x = activity.findViewById(
+          android.R.id.content
+        ) as android.view.ViewGroup;
+        const rootViewOfActivity = x.getChildAt(0);
+        const attachToView = view?.android || rootViewOfActivity;
+
         this._snackbar = Snackbar_Namespace.Snackbar.make(
           attachToView,
           snackText,
@@ -101,9 +107,14 @@ export class SnackBar {
         options.actionText = options.actionText ? options.actionText : 'Close';
         options.hideDelay = options.hideDelay ? options.hideDelay : 3000;
 
-        const attachToView =
-          (options.view && options.view.android) ||
-          topmost().currentPage.android;
+        const activity: android.app.Activity =
+          app.android.foregroundActivity || app.android.startActivity;
+        const x = activity.findViewById(
+          android.R.id.content
+        ) as android.view.ViewGroup;
+        const rootViewOfActivity = x.getChildAt(0);
+        const attachToView = options?.view?.android || rootViewOfActivity;
+
         this._snackbar = Snackbar_Namespace.Snackbar.make(
           attachToView,
           options.snackText,
@@ -117,7 +128,7 @@ export class SnackBar {
           onClick: args => {
             resolve({
               command: 'Action',
-              reason: this._getReason(1),
+              reason: _getReason(1),
               event: args
             });
           }
@@ -186,7 +197,7 @@ export class SnackBar {
           setTimeout(() => {
             resolve({
               action: 'Dismiss',
-              reason: this._getReason(3)
+              reason: _getReason(3)
             });
           }, 200);
         } catch (ex) {
@@ -199,28 +210,6 @@ export class SnackBar {
         });
       }
     });
-  }
-
-  public _getReason(value: number) {
-    switch (value) {
-      // Indicates that the Snackbar was dismissed via a swipe.
-      case 0:
-        return DismissReasons.SWIPE;
-      // Indicates that the Snackbar was dismissed via an action click.
-      case 1:
-        return DismissReasons.ACTION;
-      // Indicates that the Snackbar was dismissed via a swipe.
-      case 2:
-        return DismissReasons.TIMEOUT;
-      // Indicates that the Snackbar was dismissed via a call to dismiss().
-      case 3:
-        return DismissReasons.MANUAL;
-      // Indicates that the Snackbar was dismissed from a new Snackbar being shown.
-      case 4:
-        return DismissReasons.CONSECUTIVE;
-      default:
-        return DismissReasons.UNKNOWN;
-    }
   }
 
   private _setBackgroundColor(color) {
@@ -260,7 +249,7 @@ export class TNS_SnackbarBaseCallback extends Snackbar_Namespace
     if (event !== 1) {
       this.resolve({
         command: 'Dismiss',
-        reason: this._owner.get()._getReason(event),
+        reason: _getReason(event),
         event: event
       });
     }
@@ -268,5 +257,27 @@ export class TNS_SnackbarBaseCallback extends Snackbar_Namespace
 
   onShown(snackbar: any) {
     // console.log('callback onShown fired');
+  }
+}
+
+function _getReason(value: number) {
+  switch (value) {
+    // Indicates that the Snackbar was dismissed via a swipe.
+    case 0:
+      return DismissReasons.SWIPE;
+    // Indicates that the Snackbar was dismissed via an action click.
+    case 1:
+      return DismissReasons.ACTION;
+    // Indicates that the Snackbar was dismissed via a swipe.
+    case 2:
+      return DismissReasons.TIMEOUT;
+    // Indicates that the Snackbar was dismissed via a call to dismiss().
+    case 3:
+      return DismissReasons.MANUAL;
+    // Indicates that the Snackbar was dismissed from a new Snackbar being shown.
+    case 4:
+      return DismissReasons.CONSECUTIVE;
+    default:
+      return DismissReasons.UNKNOWN;
   }
 }
