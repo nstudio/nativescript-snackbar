@@ -1,6 +1,6 @@
 {
   "name": "@nstudio/nativescript-snackbar",
-  "version": "1.1.1",
+  "version": "1.1.2-beta2",
   "description": "A NativeScript plugin for the Material Design SnackBar.",
   "main": "snackbar",
   "typings": "index.d.ts",
@@ -59,15 +59,15 @@
   "bugs": "https://github.com/nstudio/nativescript-snackbar/issues",
   "homepage": "https://github.com/nstudio/nativescript-snackbar",
   "devDependencies": {
-    "husky": "^3.0.0",
-    "lint-staged": "^9.1.0",
-    "prettier": "^1.18.2",
-    "tns-core-modules": "~6.0.0",
-    "tns-platform-declarations": "6.0.0",
-    "typescript": "~3.4.5",
+    "husky": "^4.2.1",
+    "lint-staged": "^10.0.7",
+    "prettier": "^1.19.1",
+    "tns-core-modules": "^6.3.2",
+    "tns-platform-declarations": "^6.3.2",
+    "typescript": "~3.7.5",
     "prompt": "^1.0.0",
     "rimraf": "^2.5.0",
-    "rxjs": "6.5.3",
+    "rxjs": "6.5.4",
     "tslint": "^6.0.0",
     "semver": "^6.2.0"
   }
