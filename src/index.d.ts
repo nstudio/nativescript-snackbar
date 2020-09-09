@@ -1,4 +1,4 @@
-import { View } from 'tns-core-modules/ui/core/view';
+import { View } from '@nativescript/core';
 /**
  * Represents the SnackBar.
  */
@@ -86,5 +86,5 @@ export enum DismissReasons {
   ACTION = 'Action',
   TIMEOUT = 'Timeout',
   MANUAL = 'Manual',
-  CONSECUTIVE = 'Consecutive'
+  CONSECUTIVE = 'Consecutive',
 }

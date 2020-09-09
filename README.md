@@ -15,27 +15,17 @@ NativeScript plugin for Material Design SnackBar component.
     <a href="https://www.npmjs.com/package/@nstudio/nativescript-snackbar">
         <img src="https://img.shields.io/npm/dt/@nstudio/nativescript-snackbar.svg?label=npm%20downloads" alt="npm">
     </a>
-    <a href="https://github.com/nstudio/nativescript-snackbar/stargazers">
-        <img src="https://img.shields.io/github/stars/nstudio/nativescript-snackbar.svg" alt="stars">
-    </a>
-     <a href="https://github.com/nstudio/nativescript-snackbar/network">
-        <img src="https://img.shields.io/github/forks/nstudio/nativescript-snackbar.svg" alt="forks">
-    </a>
-    <a href="https://github.com/nstudio/nativescript-snackbar/blob/master/LICENSE">
-        <img src="https://img.shields.io/github/license/nstudio/nativescript-snackbar.svg" alt="license">
-    </a>
-    <a href="http://nstudio.io">
-      <img src="https://github.com/nstudio/media/blob/master/images/nstudio-banner.png?raw=true" alt="nStudio banner">
-    </a>
-    <h5 align="center">Do you need assistance on your project or plugin? Contact the nStudio team anytime at <a href="mailto:team@nstudio.io">team@nstudio.io</a> to get up to speed with the best practices in mobile and web app development.
-    </h5>
 </p>
 
 ---
 
 ### Installation:
 
+NativeScript 7+:
 `tns plugin add @nstudio/nativescript-snackbar`
+
+NativeScript version prior to 7:
+`tns plugin add @nstudio/nativescript-snackbar@1.1.2`
 
 ## Demo
 

@@ -5,13 +5,17 @@
     </ActionBar>
 
     <StackLayout>
-      <Label class="info" horizontalAlignment="center" verticalAlignment="center">
+      <Label
+        class="info"
+        horizontalAlignment="center"
+        verticalAlignment="center"
+      >
         <FormattedString>
-          <Span class="fa" text.decode="&#xf135; "/>
-          <Span :text="message"/>
+          <Span class="fa" text.decode="&#xf135; " />
+          <Span :text="message" />
         </FormattedString>
       </Label>
-      <Button text="Snackbar" @tap="showSnackbar" class="btn btn-primary"/>
+      <Button text="Snackbar" @tap="showSnackbar" class="btn btn-primary" />
     </StackLayout>
   </Page>
 </template>

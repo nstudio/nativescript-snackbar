@@ -1,10 +1,4 @@
 {
-  "nativescript": {
-    "id": "org.nativescript.demovue",
-    "tns-android": {
-      "version": "6.3.1"
-    }
-  },
   "description": "NativeScript Application",
   "license": "SEE LICENSE IN <your-license-filename>",
   "repository": "<fill-your-repository-here>",
@@ -12,23 +6,25 @@
     "@nstudio/nativescript-snackbar": "file:../src",
     "nativescript-theme-core": "~1.0.4",
     "nativescript-vue": "^2.4.0",
-    "@nativescript/core": "~6.3.2"
+    "@nativescript/core": "7.0.0"
   },
   "devDependencies": {
     "@babel/core": "~7.1.0",
     "@babel/preset-env": "~7.1.0",
+    "@nativescript/android": "7.0.0",
+    "@nativescript/webpack": "~3.0.0",
     "babel-loader": "~8.0.0",
-    "nativescript-dev-webpack": "~1.4.1",
     "nativescript-vue-template-compiler": "~2.4.0",
     "node-sass": "4.12.0",
-    "vue-loader": "~15.8.3",
     "tslint": "~5.20.1",
-    "typescript": "3.7.4"
+    "typescript": "3.9.7",
+    "vue-loader": "~15.8.3"
   },
   "scripts": {
     "build.plugin": "cd ../src && npm run build",
     "ci.tslint": "npm i && tslint --config '../tslint.json' 'app/**/*.ts' --exclude '**/node_modules/**' --exclude '**/platforms/**'"
   },
   "gitHead": "f548ec926e75201ab1b7c4a3a7ceefe7a4db15af",
-  "readme": "NativeScript Application"
+  "readme": "NativeScript Application",
+  "main": "app.js"
 }

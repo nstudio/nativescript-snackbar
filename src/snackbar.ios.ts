@@ -1,6 +1,5 @@
+import { Color, View } from '@nativescript/core';
 import { Subject } from 'rxjs';
-import { Color } from 'tns-core-modules/color/color';
-import { View } from 'tns-core-modules/ui/core/view';
 import { DismissReasons, SnackBarOptions } from './snackbar.common';
 export * from './snackbar.common';
 
@@ -19,7 +18,7 @@ export class SnackBar {
     // Notify new snackbar creation
     this.newSnackEvent$.next();
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const duration = 3;
       let reason: DismissReasons = null;
       const snackbar = new TTGSnackbar({ message: snackText, duration });
@@ -36,7 +35,7 @@ export class SnackBar {
       snackbar.show();
 
       // callbacks
-      snackbar.dismissBlock = args => {
+      snackbar.dismissBlock = (args) => {
         // avoid memory leaks
         dismissSubscription.unsubscribe();
         newSnackSubscription.unsubscribe();
@@ -44,7 +43,7 @@ export class SnackBar {
         resolve({
           event: args,
           command: 'Dismiss',
-          reason: reason ? reason : DismissReasons.TIMEOUT
+          reason: reason ? reason : DismissReasons.TIMEOUT,
         });
       };
 
@@ -74,11 +73,11 @@ export class SnackBar {
       textColor,
       backgroundColor,
       isRTL,
-      hideDelay
+      hideDelay,
     } = options;
 
     this.newSnackEvent$.next();
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       let reason: DismissReasons = null;
       const duration = hideDelay ? hideDelay / 1000 : 3;
 
@@ -102,7 +101,7 @@ export class SnackBar {
       snackbar.show();
 
       // callbacks
-      snackbar.dismissBlock = args => {
+      snackbar.dismissBlock = (args) => {
         // avoid memory leaks
         dismissSubscription.unsubscribe();
         newSnackSubscription.unsubscribe();
@@ -110,7 +109,7 @@ export class SnackBar {
         resolve({
           event: args,
           command: 'Dismiss',
-          reason: reason ? reason : DismissReasons.TIMEOUT
+          reason: reason ? reason : DismissReasons.TIMEOUT,
         });
       };
 

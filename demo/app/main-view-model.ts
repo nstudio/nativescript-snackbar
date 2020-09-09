@@ -1,6 +1,4 @@
-import { Observable, Page } from '@nativescript/core';
-import { confirm } from '@nativescript/core/ui/dialogs';
-import { openUrl } from '@nativescript/core/utils/utils';
+import { Dialogs, Observable, Page, Utils } from '@nativescript/core';
 import { SnackBar, SnackBarOptions } from '@nstudio/nativescript-snackbar';
 
 export class HelloWorldModel extends Observable {
@@ -17,7 +15,7 @@ export class HelloWorldModel extends Observable {
     '#047c3a',
     '#066c7a',
     '#ed0909',
-    '#467c1a'
+    '#467c1a',
   ];
 
   constructor(mainPage: Page) {
@@ -30,14 +28,14 @@ export class HelloWorldModel extends Observable {
   }
 
   nStudioIconTap() {
-    confirm({
+    Dialogs.confirm({
       message:
         'nStudio, LLC. specializes in custom software applications ranging from mobile, web, desktop, server and more. Would you like to visit nstudio.io?',
       okButtonText: 'Yes',
-      cancelButtonText: 'Close'
-    }).then(result => {
+      cancelButtonText: 'Close',
+    }).then((result) => {
       if (result) {
-        openUrl('https://nstudio.io');
+        Utils.openUrl('https://nstudio.io');
       }
     });
   }
@@ -47,11 +45,11 @@ export class HelloWorldModel extends Observable {
 
     this._SnackBar
       .simple('Hello from the 🍫 SnackBar 👋')
-      .then(args => {
+      .then((args) => {
         console.log('SnackBar.simple() result', args);
         this.set('jsonResult', JSON.stringify(args));
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('simple snackbar error', error);
       });
   }
@@ -69,18 +67,23 @@ export class HelloWorldModel extends Observable {
         Math.floor(Math.random() * this._colors.length)
       ],
       snackText: this.get('snackText'),
-      hideDelay: 3500
+      hideDelay: 3500,
     };
 
     console.log('snackbar', this._SnackBar);
 
-    this._SnackBar.action(options).then(args => {
-      console.log('SnackBar.action() result', args);
-      if (args.command === 'Action') {
-        this.set('jsonResult', JSON.stringify(args));
-      } else {
-        this.set('jsonResult', JSON.stringify(args));
-      }
-    });
+    this._SnackBar
+      .action(options)
+      .then((args) => {
+        console.log('SnackBar.action() result', args);
+        if (args.command === 'Action') {
+          this.set('jsonResult', JSON.stringify(args));
+        } else {
+          this.set('jsonResult', JSON.stringify(args));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }

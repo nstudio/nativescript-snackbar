@@ -1,4 +1,4 @@
-import { View } from 'tns-core-modules/ui/core/view';
+import { View } from '@nativescript/core';
 
 export interface SnackBarOptions {
   /**
@@ -55,5 +55,5 @@ export enum DismissReasons {
   TIMEOUT = 'Timeout',
   MANUAL = 'Manual',
   CONSECUTIVE = 'Consecutive',
-  UNKNOWN = 'Unknown'
+  UNKNOWN = 'Unknown',
 }
