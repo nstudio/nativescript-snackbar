@@ -72,13 +72,18 @@ export class HelloWorldModel extends Observable {
 
     console.log('snackbar', this._SnackBar);
 
-    this._SnackBar.action(options).then((args) => {
-      console.log('SnackBar.action() result', args);
-      if (args.command === 'Action') {
-        this.set('jsonResult', JSON.stringify(args));
-      } else {
-        this.set('jsonResult', JSON.stringify(args));
-      }
-    });
+    this._SnackBar
+      .action(options)
+      .then((args) => {
+        console.log('SnackBar.action() result', args);
+        if (args.command === 'Action') {
+          this.set('jsonResult', JSON.stringify(args));
+        } else {
+          this.set('jsonResult', JSON.stringify(args));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
