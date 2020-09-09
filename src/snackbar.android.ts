@@ -5,9 +5,15 @@ export * from './snackbar.common';
 const Snackbar_Namespace = useAndroidX()
   ? com.google.android.material.snackbar
   : (android.support as any).design.widget;
-const SNACKBAR_TEXT_ID = useAndroidX()
-  ? (com.google.android.material as any).R.id.snackbar_text
-  : (android.support as any).design.R.id.snackbar_text;
+
+function getComponentR(rtype: string, field: string): number {
+  const classPath = useAndroidX()
+    ? 'com.google.android.material.R$'
+    : 'android.support.design.R$';
+  return +java.lang.Class.forName(classPath + rtype)
+    .getDeclaredField(field)
+    .get(null);
+}
 
 function useAndroidX() {
   return (
@@ -20,8 +26,12 @@ function useAndroidX() {
 
 export class SnackBar {
   private _snackbar: any;
+  // Use this to get the textview instance inside the snackbar
+  private SNACKBAR_TEXT_ID;
 
-  constructor() {}
+  constructor() {
+    this.SNACKBAR_TEXT_ID = getComponentR('id', 'snackbar_text');
+  }
 
   // TODO: use an object for the options
   public simple(
@@ -54,6 +64,8 @@ export class SnackBar {
           3000
         );
 
+        this._snackbar;
+
         this._snackbar.setText(snackText);
 
         // set text color
@@ -75,7 +87,7 @@ export class SnackBar {
         if (maxLines) {
           const sbView = this._snackbar.getView();
           const tv = sbView.findViewById(
-            SNACKBAR_TEXT_ID
+            this.SNACKBAR_TEXT_ID
           ) as android.widget.TextView;
           tv.setMaxLines(maxLines);
         }
@@ -85,9 +97,8 @@ export class SnackBar {
         if (isRTL === true) {
           const sbView = this._snackbar.getView();
           const tv = sbView.findViewById(
-            SNACKBAR_TEXT_ID
+            this.SNACKBAR_TEXT_ID
           ) as android.widget.TextView;
-
           tv.setLayoutDirection(android.view.View.LAYOUT_DIRECTION_RTL);
         }
 
@@ -155,11 +166,9 @@ export class SnackBar {
         // https://github.com/bradmartin/nativescript-snackbar/issues/33
         if (options.maxLines) {
           const sbView = this._snackbar.getView();
-
           const tv = sbView.findViewById(
-            SNACKBAR_TEXT_ID
+            this.SNACKBAR_TEXT_ID
           ) as android.widget.TextView;
-
           tv.setMaxLines(options.maxLines);
         }
 
@@ -167,11 +176,9 @@ export class SnackBar {
         // https://github.com/bradmartin/nativescript-snackbar/issues/26
         if (options.isRTL === true) {
           const sbView = this._snackbar.getView();
-
           const tv = sbView.findViewById(
-            SNACKBAR_TEXT_ID
+            this.SNACKBAR_TEXT_ID
           ) as android.widget.TextView;
-
           tv.setLayoutDirection(android.view.View.LAYOUT_DIRECTION_RTL);
         }
 
@@ -220,12 +227,9 @@ export class SnackBar {
 
   private _setTextColor(color) {
     if (color) {
-      console.log('setting text color...', SNACKBAR_TEXT_ID);
       const mainTextView = this._snackbar
         .getView()
-        .findViewById(SNACKBAR_TEXT_ID) as android.widget.TextView;
-      console.log('textview', mainTextView);
-
+        .findViewById(this.SNACKBAR_TEXT_ID) as android.widget.TextView;
       mainTextView.setTextColor(new Color(color).android);
     }
   }
