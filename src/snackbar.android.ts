@@ -1,10 +1,6 @@
-import * as app from 'tns-core-modules/application';
-import { Color } from 'tns-core-modules/color';
-import { View } from 'tns-core-modules/ui/core/view';
+import { Application, Color, View } from '@nativescript/core';
 import { DismissReasons, SnackBarOptions } from './snackbar.common';
 export * from './snackbar.common';
-
-declare const global: any;
 
 const Snackbar_Namespace = useAndroidX()
   ? com.google.android.material.snackbar
@@ -44,7 +40,8 @@ export class SnackBar {
         }
 
         const activity: android.app.Activity =
-          app.android.foregroundActivity || app.android.startActivity;
+          Application.android.foregroundActivity ||
+          Application.android.startActivity;
         const x = activity.findViewById(
           android.R.id.content
         ) as android.view.ViewGroup;
@@ -108,7 +105,8 @@ export class SnackBar {
         options.hideDelay = options.hideDelay ? options.hideDelay : 3000;
 
         const activity: android.app.Activity =
-          app.android.foregroundActivity || app.android.startActivity;
+          Application.android.foregroundActivity ||
+          Application.android.startActivity;
         const x = activity.findViewById(
           android.R.id.content
         ) as android.view.ViewGroup;
@@ -125,13 +123,13 @@ export class SnackBar {
         this._snackbar.setDuration(options.hideDelay);
 
         const listener = new android.view.View.OnClickListener({
-          onClick: args => {
+          onClick: (args) => {
             resolve({
               command: 'Action',
               reason: _getReason(1),
-              event: args
+              event: args,
             });
-          }
+          },
         });
 
         // set the action text, click listener
@@ -197,7 +195,7 @@ export class SnackBar {
           setTimeout(() => {
             resolve({
               action: 'Dismiss',
-              reason: _getReason(3)
+              reason: _getReason(3),
             });
           }, 200);
         } catch (ex) {
@@ -206,7 +204,7 @@ export class SnackBar {
       } else {
         resolve({
           action: 'None',
-          message: 'No actionbar to dismiss'
+          message: 'No actionbar to dismiss',
         });
       }
     });
@@ -233,6 +231,7 @@ export class SnackBar {
   }
 }
 
+@NativeClass()
 export class TNS_SnackbarBaseCallback extends Snackbar_Namespace
   .BaseTransientBottomBar.BaseCallback<any> {
   public resolve = null;
@@ -250,7 +249,7 @@ export class TNS_SnackbarBaseCallback extends Snackbar_Namespace
       this.resolve({
         command: 'Dismiss',
         reason: _getReason(event),
-        event: event
+        event: event,
       });
     }
   }

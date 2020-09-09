@@ -1,6 +1,4 @@
-import { Color } from '@nativescript/core/color';
-import { EventData } from '@nativescript/core/data/observable';
-import { Page } from '@nativescript/core/ui/page';
+import { Color, EventData, Page } from '@nativescript/core';
 import { HelloWorldModel } from './main-view-model';
 
 // Event handler for Page "navigatedTo" event attached in main-page.xml
