@@ -83,7 +83,7 @@ export class SnackBar {
         cb.resolve = resolve; // handles the resolve of the promise
         this._snackbar.addCallback(cb);
 
-        // https://github.com/bradmartin/nativescript-snackbar/issues/33
+        // https://github.com/nstudio/nativescript-snackbar/issues/33
         if (maxLines) {
           const sbView = this._snackbar.getView();
           const tv = sbView.findViewById(
@@ -93,7 +93,7 @@ export class SnackBar {
         }
 
         // set RTL for snackbar
-        // https://github.com/bradmartin/nativescript-snackbar/issues/26
+        // https://github.com/nstudio/nativescript-snackbar/issues/26
         if (isRTL === true) {
           const sbView = this._snackbar.getView();
           const tv = sbView.findViewById(
@@ -163,7 +163,7 @@ export class SnackBar {
         }
 
         // set maxLines for the textview
-        // https://github.com/bradmartin/nativescript-snackbar/issues/33
+        // https://github.com/nstudio/nativescript-snackbar/issues/33
         if (options.maxLines) {
           const sbView = this._snackbar.getView();
           const tv = sbView.findViewById(
@@ -173,7 +173,7 @@ export class SnackBar {
         }
 
         // set RTL for snackbar
-        // https://github.com/bradmartin/nativescript-snackbar/issues/26
+        // https://github.com/nstudio/nativescript-snackbar/issues/26
         if (options.isRTL === true) {
           const sbView = this._snackbar.getView();
           const tv = sbView.findViewById(
