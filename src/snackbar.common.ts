@@ -55,5 +55,5 @@ export enum DismissReasons {
   TIMEOUT = 'Timeout',
   MANUAL = 'Manual',
   CONSECUTIVE = 'Consecutive',
-  UNKNOWN = 'Unknown',
+  UNKNOWN = 'Unknown'
 }

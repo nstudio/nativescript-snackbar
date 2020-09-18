@@ -103,7 +103,7 @@ Manually dismiss an active SnackBar
 ```bash
 git clone https://github.com/nstudio/nativescript-snackbar.git
 cd nativescript-snackbar/src
-npm run setup
+npm run build
 
 npm run demo.ios
 

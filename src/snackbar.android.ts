@@ -134,13 +134,13 @@ export class SnackBar {
         this._snackbar.setDuration(options.hideDelay);
 
         const listener = new android.view.View.OnClickListener({
-          onClick: (args) => {
+          onClick: args => {
             resolve({
               command: 'Action',
               reason: _getReason(1),
-              event: args,
+              event: args
             });
-          },
+          }
         });
 
         // set the action text, click listener
@@ -202,7 +202,7 @@ export class SnackBar {
           setTimeout(() => {
             resolve({
               action: 'Dismiss',
-              reason: _getReason(3),
+              reason: _getReason(3)
             });
           }, 200);
         } catch (ex) {
@@ -211,7 +211,7 @@ export class SnackBar {
       } else {
         resolve({
           action: 'None',
-          message: 'No actionbar to dismiss',
+          message: 'No actionbar to dismiss'
         });
       }
     });
@@ -236,8 +236,8 @@ export class SnackBar {
 }
 
 @NativeClass()
-export class TNS_SnackbarBaseCallback extends Snackbar_Namespace
-  .BaseTransientBottomBar.BaseCallback<any> {
+class TNS_SnackbarBaseCallback extends Snackbar_Namespace.BaseTransientBottomBar
+  .BaseCallback<any> {
   public resolve = null;
   private _owner: WeakRef<SnackBar>;
 
@@ -253,7 +253,7 @@ export class TNS_SnackbarBaseCallback extends Snackbar_Namespace
       this.resolve({
         command: 'Dismiss',
         reason: _getReason(event),
-        event: event,
+        event: event
       });
     }
   }
