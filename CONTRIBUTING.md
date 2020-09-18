@@ -1,6 +1,7 @@
 ## Development Workflow
 
-- Run `npm run setup` to install deps and transpile source.
+- Navigate to the `src` directory `cd src`
+- Run `npm run build` to install deps and transpile source.
 - Run `npm run demo.ios` for iOS or `npm run demo.android` for Android
 - Make changes to plugin src directory or the demo app and HMR (webpack NS work flow) should sync changes.
 
