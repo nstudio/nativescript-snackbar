@@ -11,6 +11,7 @@ export declare class SnackBar {
    * @param {number} - The max lines for the text of the snackbar. * Android Only *
    * @param {boolean} - Set RTL for the textview of the snackbar.
    * @param {View} - The View to which the snackbar will be attached. Default to topmost().currentPage. * Android Only *
+   * @param {padding} - The padding for the snackbar content. * iOS Only *
    */
   simple(
     snackText: string,
@@ -18,7 +19,8 @@ export declare class SnackBar {
     backgroundColor?: string,
     maxLines?: number,
     isRTL?: boolean,
-    view?: View
+    view?: View,
+    padding?: number
   ): Promise<any>;
 
   /**

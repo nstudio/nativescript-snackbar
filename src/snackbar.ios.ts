@@ -13,7 +13,8 @@ export class SnackBar {
     backgroundColor?: string,
     maxLines?: number,
     isRTL?: boolean,
-    view?: View
+    view?: View,
+    padding?: number
   ) {
     // Notify new snackbar creation
     this.newSnackEvent$.next();
@@ -31,6 +32,10 @@ export class SnackBar {
         snackbar.backgroundColor = new Color(backgroundColor).ios;
       }
       if (isRTL) snackbar.messageTextAlign = 2;
+
+      if (padding) {
+        snackbar.contentInset = new UIEdgeInsets({top: padding, left: padding, bottom: padding, right: padding});
+      }
 
       snackbar.show();
 
@@ -73,7 +78,8 @@ export class SnackBar {
       textColor,
       backgroundColor,
       isRTL,
-      hideDelay
+      hideDelay,
+      padding
     } = options;
 
     this.newSnackEvent$.next();
@@ -91,6 +97,10 @@ export class SnackBar {
         snackbar.backgroundColor = new Color(backgroundColor).ios;
       }
       if (isRTL) snackbar.messageTextAlign = 2;
+
+      if (padding) {
+        snackbar.contentInset = new UIEdgeInsets({top: padding, left: padding, bottom: padding, right: padding});
+      }
 
       snackbar.actionText = actionText;
       if (actionTextColor && Color.isValid(actionTextColor)) {

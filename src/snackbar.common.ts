@@ -47,6 +47,12 @@ export interface SnackBarOptions {
    * Default to topmost().currentPage
    */
   view?: View;
+
+  /**
+   * *iOS only*
+   * padding for the snackbar content
+   */
+  padding?: number;
 }
 
 export enum DismissReasons {

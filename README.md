@@ -59,7 +59,8 @@ public showAction() {
     backgroundColor: '#eaeaea',
     maxLines: 3, // Optional, Android Only
     isRTL: false,
-    view: <View>someView // Optional, Android Only, default to topmost().currentPage
+    view: <View>someView, // Optional, Android Only, default to topmost().currentPage
+    padding: number //Optional, iOS only
   };
 
   snackbar.action(options).then((args) => {
@@ -97,6 +98,7 @@ Manually dismiss an active SnackBar
 - **maxLines: number**
 - **isRTL: boolean**
 - **view: View**
+- **padding: number**
 
 ## Run Demo
 
