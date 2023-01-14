@@ -12,7 +12,7 @@
     "@babel/core": "~7.1.0",
     "@babel/preset-env": "~7.1.0",
     "@nativescript/android": "7.0.0",
-    "@nativescript/webpack": "~3.0.0",
+    "@nativescript/webpack": "~5.0.12",
     "babel-loader": "~8.0.0",
     "nativescript-vue-template-compiler": "~2.4.0",
     "node-sass": "4.12.0",
